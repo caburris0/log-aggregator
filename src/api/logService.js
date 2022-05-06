@@ -7,13 +7,12 @@ export async function getLogs() {
   let response
 
   try {
-    response = await axios.get(LOGS_ENDPOINT,
-      // {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Access-Control-Allow-Origin' : '*'
-      //   }        
-      // }
+    // let headers = {
+    //   'Content-Type': 'application/json',
+    //   'Access-Control-Allow-Origin' : '*'      
+    // }
+    response = await axios.get(LOGS_ENDPOINT, 
+      // {headers: headers}
     )
   } catch (error) {
     console.error(error)

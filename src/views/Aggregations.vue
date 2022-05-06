@@ -7,7 +7,12 @@
         color="lime"
         class="q-ma-md"
       />
-    </div>
+    </div>   
+    <div class="q-pa-md flex flex-center" v-if='isSampleData'>
+      <p class='note'>
+        CORS Failed - data below is sample data. Use a CORS browser extension to see live data
+      </p>      
+    </div>       
     <div v-if='logsLoaded'>
       <q-card class='card'>
         <div class='card-wrapper'>
@@ -20,8 +25,8 @@
           <p class='totals'>
             Emergency Logs: {{emergencyLogs}}
           </p>                    
-        </div>      
-      </q-card>
+        </div>       
+      </q-card>     
       <q-card class='card' v-for='(item, index) in logs' :key='index'>
         <div>
           <p>
@@ -46,6 +51,7 @@
 
 <script>
 import { getLogs } from '../api/logService';
+import { FAILSAFE_ARRAY } from '../constants/ifError' 
 import moment from 'moment'
 
 export default {
@@ -54,7 +60,8 @@ export default {
       logsLoaded: false,
       logs: [],
       severities: ['Emergency', 'Critical', 'Alert', 'Error', 'Warning', 'Debug', 'Info', 'Notice'],
-      dataToDisplay: {}
+      dataToDisplay: {},
+      isSampleData: false
     };
   },
   async beforeMount() {
@@ -79,6 +86,7 @@ export default {
   methods: {
     async getLogs() {
       this.logsLoaded = false
+      this.isSampleData = false
 
       let response;
       try {
@@ -92,6 +100,9 @@ export default {
         console.log(this.logs)
       } catch (error) {
         console.log(error)
+        this.isSampleData = true
+        this.logs = FAILSAFE_ARRAY
+        console.log('Sample data being loaded... ', this.logs)
       } finally {
         this.logsLoaded = true
       }
@@ -113,6 +124,10 @@ export default {
 .timestamps {
   font-size: 30px;
   margin: 10px 0px 20px 10px;
+}
+
+.note {
+  font-size: 15px;
 }
 
 .card {
