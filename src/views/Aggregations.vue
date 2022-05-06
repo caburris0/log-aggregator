@@ -138,6 +138,7 @@ export default {
   width: 100%;
   padding: 20px 10px 10px 10px;
   margin-bottom: 5px;
+  overflow-wrap: break-word;
 }
 
 p {
