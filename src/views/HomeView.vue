@@ -10,7 +10,6 @@
       <div class='card-body'>
         <q-card-section>
           <ApiTrigger @input='triggerApi($event)'/>
-          <!-- <LogForm/> -->
         </q-card-section>
       </div>    
     </q-card>
@@ -18,7 +17,7 @@
 </template>
 
 <script>
-import { triggerLog, getLogs } from '../api/logService';
+import { triggerLog } from '../api/logService';
 import ApiTrigger from '../components/ApiTrigger.vue';
 export default {
   components: {

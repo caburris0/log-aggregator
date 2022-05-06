@@ -51,13 +51,3 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5    
-
-  S3Bucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: diy-logger-aggregator-hosted-bucket
-      AccessControl: PublicRead
-      # WebsiteConfiguration:
-      #   IndexDocument: index.html
-      #   ErrorDocument: error.html
-    DeletionPolicy: Retain                 

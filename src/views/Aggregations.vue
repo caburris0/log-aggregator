@@ -1,27 +1,54 @@
 <template>
   <div>
-    <q-card class='card' v-for='(item, index) in logs' :key='index'>
-      <div class='card-wrapper'>
-        <p class='hero-names'>
-          {{item['severity']}}
-        </p>
-      </div>
-      <div class='card-wrapper q-ml-lg'>
-        <p>
-          User Agent: {{item['userAgent']}}
-        </p>
-      </div>
-    </q-card>      
+    <div class="q-pa-md flex flex-center" v-if='!logsLoaded'>
+      <q-circular-progress
+        indeterminate
+        size="50px"
+        color="lime"
+        class="q-ma-md"
+      />
+    </div>
+    <div v-if='logsLoaded'>
+      <q-card class='card'>
+        <div class='card-wrapper'>
+          <p class='totals'>
+            Total Log Count: {{logs.length}}
+          </p>
+          <p class='totals'>
+            Critical Logs: {{criticalLogs}}
+          </p>  
+          <p class='totals'>
+            Emergency Logs: {{emergencyLogs}}
+          </p>                    
+        </div>      
+      </q-card>
+      <q-card class='card' v-for='(item, index) in logs' :key='index'>
+        <div>
+          <p>
+            {{parseTime(item['timestamp'])}}
+          </p>  
+        </div>        
+        <div>       
+          <p>
+            <span class='bold-text'>Severity: </span>{{item['severity']}}
+          </p>
+        </div>
+        <div>
+          <p>
+            <span class='bold-text'>Source: </span>{{item['domainName']}}
+          </p>    
+        </div>
+
+      </q-card> 
+    </div>     
   </div>
 </template>
 
 <script>
 import { getLogs } from '../api/logService';
-// import { Bar } from 'vue-chartjs'
+import moment from 'moment'
+
 export default {
-  // components: {
-  //   Chart
-  // },
   data() {
     return {
       logsLoaded: false,
@@ -32,9 +59,27 @@ export default {
   },
   async beforeMount() {
     await this.getLogs();
-  },    
+  },
+  computed: {
+    criticalLogs() {
+      let tempArray = []
+      tempArray = this.logs.filter(function(log) {
+        return log.severity === 'Critical'
+      })
+      return tempArray.length
+    },
+    emergencyLogs() {
+      let tempArray = []
+      tempArray = this.logs.filter(function(log) {
+        return log.severity === 'Emergency'
+      })
+      return tempArray.length
+    }    
+  },
   methods: {
     async getLogs() {
+      this.logsLoaded = false
+
       let response;
       try {
         response = await getLogs().then(response => {
@@ -44,7 +89,6 @@ export default {
           item.severity = item.severity.charAt(0).toUpperCase() + item.severity.slice(1)
           this.logs.push(item)
         })
-        // this.getCounts()
         console.log(this.logs)
       } catch (error) {
         console.log(error)
@@ -52,19 +96,10 @@ export default {
         this.logsLoaded = true
       }
     },
-    // getCounts() {
-    //   this.severities.forEach(severity => {
-    //     let tempArray = []
-
-    //     tempArray = this.logs.map(item => {
-    //       console.log(item.severity)
-    //       console.log(severity)
-    //       return item.severity === severity
-    //     })
-    //     this.dataToDisplay[severity] = tempArray.length
-    //   })
-    //   console.log(this.dataToDisplay)
-    // }
+    parseTime(timestamp) {
+      let date = new Date(Number(timestamp));
+      return moment(date).format('dddd, MMMM Do, YYYY h:mm:ss A')
+    }    
   },
 };
 </script> 
@@ -73,6 +108,11 @@ export default {
 .chart-container {
   display: flex;
   justify-content: center;  
+}
+
+.timestamps {
+  font-size: 30px;
+  margin: 10px 0px 20px 10px;
 }
 
 .card {
@@ -85,19 +125,23 @@ export default {
   margin-bottom: 5px;
 }
 
-.text {
-  font-size: 30px;
-  margin: 10px 0px 20px 10px;
+p {
+font-size: 18px;
 }
 
-.text {
+.bold-text {
+  // font-size: 30px;
   font-weight: bold;
+}
+
+.totals {
   font-size: 20px;
   margin-top: 18px; 
-  color: black;
+  color: black;  
 }
 
 .card-wrapper {
-  display: inline-block;
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
