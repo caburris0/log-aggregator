@@ -1,6 +1,6 @@
 # Log Aggregator
 
-This template should help get you started developing with Vue 3 in Vite.
+Publically accessible website: http://diy-logger-aggregator-hosted-bucket.s3-website-us-east-1.amazonaws.com
 
 ## Recommended IDE Setup
 
