@@ -49,7 +49,6 @@ async function putItem(item) {
         "domainName": {"S": item.callerInfo.domainName},
       }
     }
-    
     await docClient.putItem(params).promise()  
 }
 
