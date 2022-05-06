@@ -1,6 +1,5 @@
 <script setup>
-import InputValue from '../components/InputValue.vue'
-import UserData from '../components/UserData.vue'
+import LogForm from '../components/LogForm.vue'
 </script>
 
 <template>
@@ -8,56 +7,38 @@ import UserData from '../components/UserData.vue'
     <q-card class='card'>
       <div class='header-card'>
         <q-card-section>
-          <p class='text'>Input your Battletag</p>
+          <p class='text'>Click the button below to trigger the API and create a log!</p>
         </q-card-section>
       </div>
       <q-separator/>
-      <div>
+      <div class='card-body'>
         <q-card-section>
-          <InputValue @updateInput='updateInput($event)'/>
+          <ApiTrigger @input='triggerApi($event)'/>
+          <!-- <LogForm/> -->
         </q-card-section>
-        <q-separator/>
-        <q-card-section>
-          <q-skeleton v-if='isLoading' height="200px" square />
-          <user-data v-if='userData.length > 0' :userData='userData' :username='battletag'/>
-        </q-card-section>  
       </div>    
     </q-card>
   </main>
 </template>
 
 <script>
-import { getUserStats } from '../api/callOwApi';
+import { createLog, getLogs } from '../api/logService';
+import ApiTrigger from '../components/ApiTrigger.vue';
 export default {
   components: {
-    InputValue
+    LogForm
   },
   data() {
     return {
-      battletag: '',
       isLoading: false,
       userData: []
     };
   },
   methods: {
-    async updateInput(input) {
-      this.battletag=input
-      this.userData = await this.doGetData(this.battletag)
-      console.log(this.userData)
+    async triggerApi() {
+      let response = await this.getLogs()
+      console.log(response)
     },
-    async doGetData (battletag) {
-      let response
-      try {
-        this.isLoading = true
-        response = await getUserStats(battletag)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        this.isLoading = false
-      }
-
-      return response
-    }    
   },
 };
 </script>
@@ -69,13 +50,13 @@ export default {
 }
 
 .card {
-  width: 50%;
+  width: 100%;
 }
 
-/* .card-body {
+.card-body {
   display: flex;
-  justify-content: space-between;
-} */
+  justify-content: center;
+}
 
 .text {
   font-weight: bold;

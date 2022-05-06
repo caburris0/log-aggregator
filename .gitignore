@@ -13,12 +13,14 @@ dist
 dist-ssr
 coverage
 *.local
+.vscode
+/src/backend/infrastructure/.aws-sam/
 
 /cypress/videos/
 /cypress/screenshots/
 
 # Editor directories and files
-.vscode/*
+.vscode/
 !.vscode/extensions.json
 .idea
 *.suo
