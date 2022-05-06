@@ -1,4 +1,4 @@
-# OverwatchApp
+# Log Aggregator
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -26,4 +26,13 @@ npm run dev
 
 ```sh
 npm run build
+```
+## Build and Deploy AWS Infrastructure
+
+```sh
+sam build
+```
+
+```sh
+sam deploy --guided
 ```
