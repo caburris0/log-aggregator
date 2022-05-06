@@ -50,7 +50,7 @@ https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/trigger will write 
   "requestId": "8aa9557a-257d-4277-aa3f-94355923e7fa", //requestId from Lambda context
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36", //user agent of request source
   "domainName": "32va3d78l4.execute-api.us-east-1.amazonaws.com", //domain of request source
-  }
+ }
 ```
 https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/logs will return all logs from the data store
 
