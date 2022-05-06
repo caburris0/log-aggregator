@@ -27,7 +27,7 @@
           <p>
             {{parseTime(item['timestamp'])}}
           </p>  
-        </div>        
+        </div>
         <div>       
           <p>
             <span class='bold-text'>Severity: </span>{{item['severity']}}
@@ -35,7 +35,7 @@
         </div>
         <div>
           <p>
-            <span class='bold-text'>Source: </span>{{item['domainName']}}
+            <span class='bold-text'>Source: </span>{{item['userAgent']}}
           </p>    
         </div>
 
