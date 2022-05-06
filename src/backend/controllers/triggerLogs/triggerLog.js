@@ -21,7 +21,7 @@ function getUserAgent(event) {
   if (event.hasOwnProperty('requestContext')) {
     userAgent = event.requestContext.identity.userAgent
   } else {
-    userAgent = 'from AWS Console'
+    userAgent = 'AWS Console'
   }
   
   return userAgent
@@ -32,7 +32,7 @@ function getDomainName(event) {
   if (event.hasOwnProperty('requestContext')) {
     domainName = event.requestContext.domainName
   } else {
-    domainName = 'from AWS Console'
+    domainName = 'AWS Console'
   }
   
   return domainName
@@ -64,7 +64,7 @@ exports.handler = async (event, context) => {
   }
   try {
     await putItem(log)
-    console.log('wrote item')
+    console.log('wrote item to dynamo')
   } catch (error) {
     console.log(error)
   }
@@ -74,6 +74,5 @@ exports.handler = async (event, context) => {
       body: JSON.stringify(log),
   };
 
-  //TODO add write to dynamo table
   return response;
 };
