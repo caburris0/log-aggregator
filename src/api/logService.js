@@ -1,10 +1,11 @@
 import axios from 'axios'
 
 const LOGS_ENDPOINT = 'https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/logs'
+const TRIGGER_ENDPOINT = 'https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/trigger'
 
 export async function getLogs() {
   let response
-  
+
   try {
     response = await axios.get(LOGS_ENDPOINT,
       {
@@ -16,22 +17,22 @@ export async function getLogs() {
   } catch (error) {
     console.error(error)
   }
-  return response
+
+  return JSON.parse(JSON.stringify(response.data))
 }
 
-export async function createLog(log) {
+export async function triggerLog() {
   let response
   
   try {
-    response = await axios.post(LOGS_ENDPOINT, log)
+    response = await axios.get(TRIGGER_ENDPOINT)
   } catch (error) {
     console.error(error)
   }
-  console.log('returning from lambda ', response)
   return response
 }
 
 export default {
   getLogs,
-  createLog
+  triggerLog
 }

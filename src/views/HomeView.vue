@@ -1,7 +1,3 @@
-<script setup>
-import LogForm from '../components/LogForm.vue'
-</script>
-
 <template>
   <main>
     <q-card class='card'>
@@ -22,11 +18,11 @@ import LogForm from '../components/LogForm.vue'
 </template>
 
 <script>
-import { createLog, getLogs } from '../api/logService';
+import { triggerLog, getLogs } from '../api/logService';
 import ApiTrigger from '../components/ApiTrigger.vue';
 export default {
   components: {
-    LogForm
+    ApiTrigger
   },
   data() {
     return {
@@ -36,7 +32,7 @@ export default {
   },
   methods: {
     async triggerApi() {
-      let response = await this.getLogs()
+      let response = await triggerLog()
       console.log(response)
     },
   },
