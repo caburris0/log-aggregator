@@ -52,6 +52,5 @@ https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/trigger will write 
   "domainName": "32va3d78l4.execute-api.us-east-1.amazonaws.com", //domain of request source
   }
 ```
-```sh
-sam deploy --guided
-```
+https://32va3d78l4.execute-api.us-east-1.amazonaws.com/Stage/logs will return all logs from the data store
+
